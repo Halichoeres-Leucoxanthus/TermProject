@@ -1,4 +1,4 @@
-This is a projects made by following the instructions below.
+This is a project made by following the instructions below.
 
 Create a class named Student that contains the following data members:
 
