@@ -1,5 +1,7 @@
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
+
 public class Student {
 
     static int TotalStudents;
@@ -8,13 +10,15 @@ public class Student {
     String Name_Surname;
     double[] Marks = new double[5];
     String[] courseNames = new String[5];
+
     //The constructor named 'Student' for incrementing roll number by one
     public Student() {
         roll_number = unique_number++;
-        Name_Surname="";
+        Name_Surname = "";
         Arrays.fill(Marks, 0.0d);
         TotalStudents++;
     }
+
     //Input Function
     public void Input(){
         Scanner scanner = new Scanner(System.in);
@@ -27,20 +31,23 @@ public class Student {
             courseNames[i] = scanner.nextLine();
             do {
                 System.out.print(courseNames[i] + ": ");
-                float inputMark = scanner.nextFloat();
-                /*
-                I have to add the empty scanner.nextLine code below because we are using
-                nextFloat before nextLine. So it is not able to read the input because of
-                the feature of nextFloat which is not getting the cursor of scanner to the
-                next line. So we have to use this for taking the cursor to the nextLine.
-                With this method input commands will execute correctly all the time.
-                */
-                scanner.nextLine();
-                if (inputMark >= 0 && inputMark <= 100) {
-                    Marks[i] = inputMark;
-                    isValid = true;
-                } else {
-                    System.out.println("Error: Invalid input. Please enter a value between 0 and 100.");
+                try {
+                    float inputMark = scanner.nextFloat();
+                // I have to add the empty scanner.nextLine code below because we are using
+                // nextFloat before nextLine. So it is not able to read the input because of
+                // the feature of nextFloat which is not getting the cursor of scanner to the
+                // next line. So we have to use this for taking the cursor to the nextLine.
+                // With this method input commands will execute correctly all the time.
+                    scanner.nextLine();
+                    if (inputMark >= 0 && inputMark <= 100) {
+                        Marks[i] = inputMark;
+                        isValid = true;
+                    } else {
+                        System.out.println("Error: Invalid input. Please enter a value between 0 and 100.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Error: Invalid input. Please enter a numeric value.");
+                    scanner.nextLine(); // Consume the invalid input
                 }
             } while (!isValid);
         }
